@@ -33,7 +33,8 @@ class Capture {
   Capture(ros::NodeHandle& node,
           const std::string& topic_name,
           int32_t buffer_size,
-          const std::string& frame_id);
+          const std::string& frame_id,
+          bool flip_it);
   
   /** 
    * @brief Open capture device with device ID.
@@ -149,6 +150,10 @@ class Capture {
    * @brief size of publisher buffer
    */
   int32_t buffer_size_;
+  /**
+   * @brief invert image
+   */
+  bool flip_image_;
 
   /**
    * @brief image publisher created by image_transport::ImageTransport.

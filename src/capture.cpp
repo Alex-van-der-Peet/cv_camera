@@ -9,14 +9,18 @@ namespace enc = sensor_msgs::image_encodings;
 Capture::Capture(ros::NodeHandle& node,
                  const std::string& topic_name,
                  int32_t buffer_size,
-                 const std::string& frame_id) :
+                 const std::string& frame_id,
+                 bool flip_it) :
     node_(node),
     it_(node_),
     topic_name_(topic_name),
     buffer_size_(buffer_size),
     frame_id_(frame_id),
-    info_manager_(node_, frame_id)
+    info_manager_(node_, frame_id),
+    flip_image_(flip_it)
 {
+    //node.param<bool>("flip_image", flip_image_, false);
+    std::cout<<"\nCamera Flip="<<flip_it<<"\n";
 }
 
 void Capture::open(int32_t device_id)
@@ -67,6 +71,7 @@ void Capture::openFile(const std::string& file_path)
 bool Capture::capture()
 {
   if(cap_.read(bridge_.image)) {
+    if (flip_image_)cv::flip(bridge_.image,bridge_.image,-1);//mandeep
     ros::Time now = ros::Time::now();
     bridge_.encoding = enc::BGR8;
     bridge_.header.stamp = now;

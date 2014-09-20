@@ -25,6 +25,8 @@ void Driver::setup() {
   private_node_.getParam("device_id", device_id);
   private_node_.getParam("frame_id", frame_id);
   private_node_.getParam("rate", hz);
+  bool flip_it=false;
+  private_node_.getParam("flip_image", flip_it);
 
   int32_t image_width(640);
   int32_t image_height(480);
@@ -32,7 +34,7 @@ void Driver::setup() {
   camera_.reset(new Capture(camera_node_,
                             "image_raw",
                             PUBLISHER_BUFFER_SIZE,
-                            frame_id));
+                            frame_id,flip_it));
   if (private_node_.getParam("file", file_path) &&
       file_path != "") {
     camera_->openFile(file_path);
