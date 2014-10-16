@@ -2,6 +2,8 @@ ROS OpenCV camera driver
 ========================
 It is very easy to capture video device if we use cv::VideoCapture of OpenCV.
 
+This is a modified cv_camera package, to allow vertical flipping of the video input to correct for the upside-down mounting of the Senz3D on one of our robots.
+
 cv_camera_node
 ------------------
 This node uses [camera_info_manager](http://wiki.ros.org/camera_info_manager) for dealing with camera_info.
